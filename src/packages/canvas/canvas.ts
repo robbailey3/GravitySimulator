@@ -10,7 +10,7 @@ export class Canvas {
   private config: CanvasConfig = {
     backgroundColor: '#000000',
     fillColor: '#ffffff',
-    strokeColor: '#ffffff',
+    strokeColor: '#ffffff'
   };
 
   constructor(private readonly element: HTMLCanvasElement) {
@@ -33,11 +33,24 @@ export class Canvas {
     this.ctx.restore();
   }
 
-  public circle(x: number, y: number, radius: number, fillColour: string = this.config.fillColor) {
+  public circle(
+    x: number,
+    y: number,
+    radius: number,
+    fillColour: string = this.config.fillColor
+  ) {
     this.ctx.save();
     this.ctx.fillStyle = fillColour;
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, Math.PI * 2);
     this.ctx.fill();
+  }
+
+  public get width(): number {
+    return this.element.width;
+  }
+
+  public get height(): number {
+    return this.element.height;
   }
 }

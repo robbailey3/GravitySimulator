@@ -32,7 +32,6 @@ export class Game {
           continue;
         }
         const force = this.calculateForce(this.planets[i], this.planets[j]);
-        console.log(i, j, force);
         this.planets[i].acceleration = Vector.add(
           this.planets[i].acceleration,
           force.divide(this.planets[i].mass)
@@ -40,23 +39,36 @@ export class Game {
       }
       this.planets[i].update();
       this.planets[i].draw();
+      if (this.checkOutOfBounds(this.planets[i])) {
+        continue;
+      }
     }
+    console.log(this.planets.length);
     window.setTimeout(() => this.run(), 1000 / 60);
   }
 
   private calculateForce(planet: Planet, other: Planet) {
-    console.log(planet.position, other.position);
     const r = Vector.subtract(planet.position, other.position);
-    console.log({ r });
     const rMag = Vector.magnitude(r);
-    console.log({ rMag });
     const force = Vector.multiply(
       r,
       (this.G * planet.mass * other.mass) / (rMag * rMag)
     )
       .divide(this.scale)
       .multiply(-1);
-    console.log({ force });
     return force;
+  }
+
+  public checkOutOfBounds(planet: Planet): boolean {
+    if (
+      planet.position.x < 0 ||
+      planet.position.x > this.canvas.width ||
+      planet.position.y < 0 ||
+      planet.position.y > this.canvas.height
+    ) {
+      this.planets.splice(this.planets.indexOf(planet), 1);
+      return true;
+    }
+    return false;
   }
 }
