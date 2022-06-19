@@ -20,7 +20,7 @@ export class Vector {
     return new Vector(v1.x + v2.x, v1.y + v2.y);
   }
 
-  public static minus(v1: Vector, v2: Vector): Vector {
+  public static subtract(v1: Vector, v2: Vector): Vector {
     return new Vector(v1.x - v2.x, v1.y - v2.y);
   }
 
@@ -75,8 +75,8 @@ export class Vector {
     return Vector.add(this, v);
   }
 
-  public minus(v: Vector): Vector {
-    return Vector.minus(this, v);
+  public subtract(v: Vector): Vector {
+    return Vector.subtract(this, v);
   }
 
   public multiply(n: number): Vector {
