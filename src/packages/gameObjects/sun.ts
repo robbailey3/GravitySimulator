@@ -1,19 +1,20 @@
-import { Canvas } from '../canvas';
-import { Vector } from '../vector';
-import { GameObject, GameObjectConfig } from './gameObject';
+import { Vector } from "../vector";
+import { GameObject, GameObjectConfig } from "./gameObject";
 
-export interface PlanetConfig extends GameObjectConfig {
+export interface SunConfig extends GameObjectConfig {
   radius: number;
   mass: number;
   color: string;
 }
 
-export class Planet extends GameObject {
+export class Sun extends GameObject {
   public radius: number;
   public mass: number;
   public color: string;
-
-  constructor(config: PlanetConfig) {
+  
+  constructor(
+    config: SunConfig
+  ) {
     super(config);
   }
 
