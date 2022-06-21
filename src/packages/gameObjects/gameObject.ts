@@ -6,6 +6,9 @@ export interface GameObjectConfig {
   velocity: Vector;
   acceleration: Vector;
   canvas: Canvas;
+  radius: number;
+  mass: number;
+  color: string;
 }
 
 export abstract class GameObject {
@@ -13,7 +16,10 @@ export abstract class GameObject {
   public velocity: Vector;
   public acceleration: Vector;
   public canvas: Canvas;
-  
+  public radius: number;
+  public mass: number;
+  public color: string;
+
   constructor(config: GameObjectConfig) {
     Object.assign(this, config);
   }
