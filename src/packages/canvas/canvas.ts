@@ -13,7 +13,7 @@ export class Canvas {
     strokeColor: '#ffffff'
   };
 
-  constructor(private readonly element: HTMLCanvasElement) {
+  constructor(public readonly element: HTMLCanvasElement) {
     if (!element) {
       throw new Error('Canvas element is not defined');
     }

@@ -32,3 +32,7 @@ const game = new Game(cvs, settingsManager);
 game.init();
 
 game.run();
+
+document.getElementById('clear-button').addEventListener('click', () => {
+  game.clear();
+});

@@ -20,14 +20,14 @@ export class Game {
     private readonly canvas: Canvas,
     private readonly settings: SettingsManager
   ) {
-    document.addEventListener('mousedown', (e) => {
+    canvas.element.addEventListener('mousedown', (e) => {
       this.isClicking = true;
       this.clickStart = {
         x: e.clientX,
         y: e.clientY
       };
     });
-    document.addEventListener('mouseup', (e) => {
+    canvas.element.addEventListener('mouseup', (e) => {
       if (this.isClicking) {
         if (e.ctrlKey || e.metaKey) {
           this.objects.push(
@@ -65,8 +65,6 @@ export class Game {
   public init() {}
 
   public run() {
-    console.log(this.totalFrames);
-    console.time('run');
     this.canvas.clear();
     for (let i = 0; i < this.objects.length; i++) {
       this.objects[i].acceleration = new Vector(0, 0);
@@ -87,9 +85,8 @@ export class Game {
       }
       this.objects[i].draw();
     }
-    this.totalFrames++;
-    console.timeEnd('run');
-    window.requestAnimationFrame(() => this.run.call(this));
+    this.generateGravityVisualisation();
+    window.requestAnimationFrame(() => this.run());
   }
 
   private calculateForce(planet: GameObject, other: GameObject) {
@@ -113,6 +110,37 @@ export class Game {
       return true;
     }
     return false;
+  }
+
+  private generateGravityVisualisation() {
+    const { width, height } = this.canvas;
+
+    for (let x = 0; x <= width; x += 10) {
+      for (let y = 0; y <= height; y += 10) {
+        let totalForce = new Vector(0, 0);
+        for (let i = 0; i < this.objects.length; i++) {
+          const force = this.calculateForce(
+            this.objects[i],
+            new Planet({
+              position: new Vector(x, y),
+              velocity: new Vector(0, 0),
+              acceleration: new Vector(0, 0),
+              canvas: this.canvas,
+              radius: 1,
+              mass: 1,
+              color: '#000000'
+            })
+          );
+          totalForce = Vector.add(totalForce, force);
+        }
+        this.canvas.circle(
+          x,
+          y,
+          Math.min(Vector.magnitude(totalForce), 5),
+          'rgba(255,255,255,0.5)'
+        );
+      }
+    }
   }
 
   public clear() {
