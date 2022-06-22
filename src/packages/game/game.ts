@@ -10,6 +10,7 @@ export class Game {
   private readonly G = 6.67408e-11;
   private readonly scale = 1.495978707e9;
   private isClicking: boolean = false;
+  private totalFrames = 0;
   private clickStart: {
     x: number;
     y: number;
@@ -64,6 +65,8 @@ export class Game {
   public init() {}
 
   public run() {
+    console.log(this.totalFrames);
+    console.time('run');
     this.canvas.clear();
     for (let i = 0; i < this.objects.length; i++) {
       this.objects[i].acceleration = new Vector(0, 0);
@@ -84,6 +87,8 @@ export class Game {
       }
       this.objects[i].draw();
     }
+    this.totalFrames++;
+    console.timeEnd('run');
     window.requestAnimationFrame(() => this.run.call(this));
   }
 
@@ -108,5 +113,9 @@ export class Game {
       return true;
     }
     return false;
+  }
+
+  public clear() {
+    this.objects = [];
   }
 }

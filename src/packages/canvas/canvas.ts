@@ -44,6 +44,7 @@ export class Canvas {
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, Math.PI * 2);
     this.ctx.fill();
+    this.ctx.restore();
   }
 
   public get width(): number {
