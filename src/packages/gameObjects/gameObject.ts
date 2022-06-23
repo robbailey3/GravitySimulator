@@ -1,4 +1,5 @@
 import { Canvas } from '../canvas';
+import { Colour } from '../colour';
 import { Vector } from '../vector';
 
 export interface GameObjectConfig {
@@ -8,7 +9,7 @@ export interface GameObjectConfig {
   canvas: Canvas;
   radius: number;
   mass: number;
-  color: string;
+  color: Colour;
 }
 
 export abstract class GameObject {
@@ -18,13 +19,13 @@ export abstract class GameObject {
   public canvas: Canvas;
   public radius: number;
   public mass: number;
-  public color: string;
+  public color: Colour;
 
   constructor(config: GameObjectConfig) {
     Object.assign(this, config);
   }
 
-  public abstract update(): void;
+  public abstract update(force: Vector): void;
 
   public abstract draw(): void;
 }

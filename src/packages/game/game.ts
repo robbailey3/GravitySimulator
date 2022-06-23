@@ -1,4 +1,5 @@
 import { Canvas } from '../canvas';
+import { Colour } from '../colour';
 import { Planet } from '../gameObjects';
 import { GameObject } from '../gameObjects/gameObject';
 import { Sun } from '../gameObjects/sun';
@@ -10,7 +11,6 @@ export class Game {
   private readonly G = 6.67408e-11;
   private readonly scale = 1.495978707e9;
   private isClicking: boolean = false;
-  private totalFrames = 0;
   private clickStart: {
     x: number;
     y: number;
@@ -53,7 +53,9 @@ export class Game {
               canvas: this.canvas,
               radius: settings.planetRadius,
               mass: settings.planetMass,
-              color: settings.planetColour
+              color: settings.planetColour,
+              showTrail: settings.displayTrail,
+              showForceVector: settings.displayForceVector
             })
           );
         }
@@ -68,24 +70,21 @@ export class Game {
     this.canvas.clear();
     for (let i = 0; i < this.objects.length; i++) {
       this.objects[i].acceleration = new Vector(0, 0);
+      let sumForce = new Vector(0, 0);
       for (let j = 0; j < this.objects.length; j++) {
         if (i === j) {
           continue;
         }
         const force = this.calculateForce(this.objects[i], this.objects[j]);
-        // F = ma // a = F/m
-        this.objects[i].acceleration = Vector.add(
-          this.objects[i].acceleration,
-          force.divide(this.objects[i].mass)
-        );
+        sumForce = Vector.add(sumForce, force);
       }
-      this.objects[i].update();
+      this.objects[i].update(sumForce);
       if (this.checkOutOfBounds(this.objects[i])) {
         continue;
       }
       this.objects[i].draw();
     }
-    this.generateGravityVisualisation();
+    this.drawGravityVisualisation();
     window.requestAnimationFrame(() => this.run());
   }
 
@@ -112,11 +111,14 @@ export class Game {
     return false;
   }
 
-  private generateGravityVisualisation() {
+  private drawGravityVisualisation() {
+    if (!this.settings.displayGravityVisualisation) {
+      return;
+    }
     const { width, height } = this.canvas;
 
-    for (let x = 0; x <= width; x += 10) {
-      for (let y = 0; y <= height; y += 10) {
+    for (let x = 0; x <= width; x += 20) {
+      for (let y = 0; y <= height; y += 20) {
         let totalForce = new Vector(0, 0);
         for (let i = 0; i < this.objects.length; i++) {
           const force = this.calculateForce(
@@ -128,17 +130,24 @@ export class Game {
               canvas: this.canvas,
               radius: 1,
               mass: 1,
-              color: '#000000'
+              color: new Colour(0, 0, 0),
+              showTrail: false,
+              showForceVector: false
             })
           );
           totalForce = Vector.add(totalForce, force);
         }
-        this.canvas.circle(
-          x,
-          y,
-          Math.min(Vector.magnitude(totalForce), 5),
-          'rgba(255,255,255,0.5)'
-        );
+        if (totalForce.magnitude() > 1e-4) {
+          this.canvas.circle(
+            x,
+            y,
+            Math.min(
+              Math.ceil(Vector.magnitude(totalForce) * 10000) / 10000,
+              5
+            ),
+            'rgba(255,255,255,0.5)'
+          );
+        }
       }
     }
   }

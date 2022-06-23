@@ -18,27 +18,33 @@
       <div class="form">
         <div class="form-group">
           <label for="planet-mass">Planet Mass</label>
-          <input
-            type="range"
-            class="form-control"
-            id="planet-mass"
-            min="20"
-            max="28"
-            step="1"
-            value="24"
-          />
+          <div class="form-input-wrapper">
+            <input
+              type="range"
+              class="form-control"
+              id="planet-mass"
+              min="20"
+              max="28"
+              step="0.25"
+              value="24"
+            />
+            <span id="planet-mass-value">1e24</span>
+          </div>
         </div>
         <div class="form-group">
           <label for="planet-radius">Planet Radius</label>
-          <input
-            type="range"
-            class="form-control"
-            id="planet-radius"
-            min="5"
-            max="40"
-            step="1"
-            value="10"
-          />
+          <div class="form-input-wrapper">
+            <input
+              type="range"
+              class="form-control"
+              id="planet-radius"
+              min="5"
+              max="40"
+              step="1"
+              value="10"
+            />
+            <span id="planet-radius-value">10</span>
+          </div>
         </div>
         <div class="form-group">
           <label for="planet-colour">Planet Colour</label>
@@ -51,27 +57,33 @@
         </div>
         <div class="form-group">
           <label for="sun-mass">Sun Mass</label>
-          <input
-            type="range"
-            class="form-control"
-            id="sun-mass"
-            min="25"
-            max="35"
-            step="1"
-            value="30"
-          />
+          <div class="form-input-wrapper">
+            <input
+              type="range"
+              class="form-control"
+              id="sun-mass"
+              min="28"
+              max="32"
+              step="0.25"
+              value="30"
+            />
+            <span id="sun-mass-value">1e30</span>
+          </div>
         </div>
         <div class="form-group">
-          <label for="sun-radius">Sun Radius</label>
-          <input
-            type="range"
-            class="form-control"
-            id="sun-radius"
-            min="20"
-            max="50"
-            step="1"
-            value="40"
-          />
+          <div class="form-input-wrapper">
+            <label for="sun-radius">Sun Radius</label>
+            <input
+              type="range"
+              class="form-control"
+              id="sun-radius"
+              min="20"
+              max="50"
+              step="1"
+              value="40"
+            />
+            <span id="sun-radius-value">40</span>
+          </div>
         </div>
         <div class="form-group">
           <label for="sun-colour">Sun Colour</label>
@@ -82,6 +94,24 @@
             value="#ffff00"
           />
         </div>
+      </div>
+      <div class="form-group">
+        <label for="display-trail">Display Trails</label>
+        <input type="checkbox" class="form-control" id="display-trail" />
+      </div>
+      <div class="form-group">
+        <label for="display-gravity-visualisation"
+          >Display Gravity Visualisation</label
+        >
+        <input
+          type="checkbox"
+          class="form-control"
+          id="display-gravity-visualisation"
+        />
+      </div>
+      <div class="form-group">
+        <label for="display-force-vector">Display Force Vector</label>
+        <input type="checkbox" class="form-control" id="display-force-vector" />
       </div>
       <div class="actions">
         <button id="clear-button">Clear</button>
