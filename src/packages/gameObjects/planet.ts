@@ -23,7 +23,7 @@ export class Planet extends GameObject {
   public update() {
     if (this.showTrail) {
       this.trail.push(Vector.clone(this.position));
-      if (this.trail.length > 50) {
+      if (this.trail.length > 100) {
         this.trail.shift();
       }
     }
@@ -40,7 +40,7 @@ export class Planet extends GameObject {
     );
     if (this.showTrail) {
       this.trail.forEach((v) => {
-        this.canvas.circle(v.x, v.y, 1, 'rgba(255,255,255,0.3)');
+        this.canvas.circle(v.x, v.y, 1, this.color);
       });
     }
   }

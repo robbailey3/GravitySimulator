@@ -85,7 +85,7 @@ export class Game {
       }
       this.objects[i].draw();
     }
-    this.generateGravityVisualisation();
+    // this.generateGravityVisualisation();
     window.requestAnimationFrame(() => this.run());
   }
 
@@ -115,8 +115,8 @@ export class Game {
   private generateGravityVisualisation() {
     const { width, height } = this.canvas;
 
-    for (let x = 0; x <= width; x += 10) {
-      for (let y = 0; y <= height; y += 10) {
+    for (let x = 0; x <= width; x += 20) {
+      for (let y = 0; y <= height; y += 20) {
         let totalForce = new Vector(0, 0);
         for (let i = 0; i < this.objects.length; i++) {
           const force = this.calculateForce(
