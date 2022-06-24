@@ -18,14 +18,41 @@ document
     e.stopImmediatePropagation();
   });
 
-const settingsManager = new SettingsManager(
-  document.getElementById('planet-mass') as HTMLInputElement,
-  document.getElementById('planet-radius') as HTMLInputElement,
-  document.getElementById('planet-colour') as HTMLInputElement,
-  document.getElementById('sun-mass') as HTMLInputElement,
-  document.getElementById('sun-radius') as HTMLInputElement,
-  document.getElementById('sun-colour') as HTMLInputElement
-);
+const settingsManager = new SettingsManager({
+  planetMassRangeInput: document.getElementById(
+    'planet-mass'
+  ) as HTMLInputElement,
+  planetMassValue: document.getElementById(
+    'planet-mass-value'
+  ) as HTMLSpanElement,
+  planetRadiusRangeInput: document.getElementById(
+    'planet-radius'
+  ) as HTMLInputElement,
+  planetRadiusValue: document.getElementById(
+    'planet-radius-value'
+  ) as HTMLSpanElement,
+  planetColourInput: document.getElementById(
+    'planet-colour'
+  ) as HTMLInputElement,
+  sunMassRangeInput: document.getElementById('sun-mass') as HTMLInputElement,
+  sunMassValue: document.getElementById('sun-mass-value') as HTMLSpanElement,
+  sunRadiusRangeInput: document.getElementById(
+    'sun-radius'
+  ) as HTMLInputElement,
+  sunRadiusValue: document.getElementById(
+    'sun-radius-value'
+  ) as HTMLSpanElement,
+  sunColourInput: document.getElementById('sun-colour') as HTMLInputElement,
+  displayGravityVisualisationInput: document.getElementById(
+    'display-gravity-visualisation'
+  ) as HTMLInputElement,
+  displayForceVectorInput: document.getElementById(
+    'display-force-vector'
+  ) as HTMLInputElement,
+  displayTrailInput: document.getElementById(
+    'display-trail'
+  ) as HTMLInputElement
+});
 
 const game = new Game(cvs, settingsManager);
 

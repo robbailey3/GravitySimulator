@@ -1,24 +1,24 @@
-import { Vector } from "../vector";
-import { GameObject, GameObjectConfig } from "./gameObject";
+import { Colour } from '../colour';
+import { Vector } from '../vector';
+import { GameObject, GameObjectConfig } from './gameObject';
 
 export interface SunConfig extends GameObjectConfig {
   radius: number;
   mass: number;
-  color: string;
+  color: Colour;
 }
 
 export class Sun extends GameObject {
   public radius: number;
   public mass: number;
-  public color: string;
-  
-  constructor(
-    config: SunConfig
-  ) {
+  public color: Colour;
+
+  constructor(config: SunConfig) {
     super(config);
   }
 
-  public update() {
+  public update(force: Vector) {
+    this.acceleration = force.divide(this.mass);
     this.velocity = Vector.add(this.velocity, this.acceleration);
     this.position = Vector.add(this.position, this.velocity);
   }
@@ -28,7 +28,7 @@ export class Sun extends GameObject {
       this.position.x,
       this.position.y,
       this.radius,
-      this.color
+      this.color.toHex()
     );
   }
 }

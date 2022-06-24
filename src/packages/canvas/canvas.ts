@@ -47,6 +47,22 @@ export class Canvas {
     this.ctx.restore();
   }
 
+  public line(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    strokeColour: string = this.config.strokeColor
+  ) {
+    this.ctx.save();
+    this.ctx.strokeStyle = strokeColour;
+    this.ctx.beginPath();
+    this.ctx.moveTo(x1, y1);
+    this.ctx.lineTo(x2, y2);
+    this.ctx.stroke();
+    this.ctx.restore();
+  }
+
   public get width(): number {
     return this.element.width;
   }
