@@ -1,4 +1,5 @@
 import { Colour } from '../colour';
+import { SettingsManager } from '../game/settings';
 import { Vector } from '../vector';
 import { GameObject, GameObjectConfig } from './gameObject';
 
@@ -13,8 +14,8 @@ export class Sun extends GameObject {
   public mass: number;
   public color: Colour;
 
-  constructor(config: SunConfig) {
-    super(config);
+  constructor(config: SunConfig, settings: SettingsManager) {
+    super(config, settings);
   }
 
   public update(force: Vector) {

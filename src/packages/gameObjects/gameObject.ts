@@ -1,5 +1,6 @@
 import { Canvas } from '../canvas';
 import { Colour } from '../colour';
+import { SettingsManager } from '../game/settings';
 import { Vector } from '../vector';
 
 export interface GameObjectConfig {
@@ -21,7 +22,7 @@ export abstract class GameObject {
   public mass: number;
   public color: Colour;
 
-  constructor(config: GameObjectConfig) {
+  constructor(config: GameObjectConfig, protected settings: SettingsManager) {
     Object.assign(this, config);
   }
 

@@ -31,32 +31,36 @@ export class Game {
       if (this.isClicking) {
         if (e.ctrlKey || e.metaKey) {
           this.objects.push(
-            new Sun({
-              position: new Vector(e.clientX, e.clientY),
-              velocity: new Vector(0, 0),
-              acceleration: new Vector(0, 0),
-              canvas: this.canvas,
-              radius: settings.sunRadius,
-              mass: settings.sunMass,
-              color: settings.sunColour
-            })
+            new Sun(
+              {
+                position: new Vector(e.clientX, e.clientY),
+                velocity: new Vector(0, 0),
+                acceleration: new Vector(0, 0),
+                canvas: this.canvas,
+                radius: settings.sunRadius,
+                mass: settings.sunMass,
+                color: settings.sunColour
+              },
+              this.settings
+            )
           );
         } else {
           this.objects.push(
-            new Planet({
-              position: new Vector(e.clientX, e.clientY),
-              velocity: new Vector(
-                (e.clientX - this.clickStart.x) / 20,
-                (e.clientY - this.clickStart.y) / 20
-              ),
-              acceleration: new Vector(0, 0),
-              canvas: this.canvas,
-              radius: settings.planetRadius,
-              mass: settings.planetMass,
-              color: settings.planetColour,
-              showTrail: settings.displayTrail,
-              showForceVector: settings.displayForceVector
-            })
+            new Planet(
+              {
+                position: new Vector(e.clientX, e.clientY),
+                velocity: new Vector(
+                  (e.clientX - this.clickStart.x) / 20,
+                  (e.clientY - this.clickStart.y) / 20
+                ),
+                acceleration: new Vector(0, 0),
+                canvas: this.canvas,
+                radius: settings.planetRadius,
+                mass: settings.planetMass,
+                color: settings.planetColour
+              },
+              this.settings
+            )
           );
         }
         this.isClicking = false;
@@ -123,17 +127,18 @@ export class Game {
         for (let i = 0; i < this.objects.length; i++) {
           const force = this.calculateForce(
             this.objects[i],
-            new Planet({
-              position: new Vector(x, y),
-              velocity: new Vector(0, 0),
-              acceleration: new Vector(0, 0),
-              canvas: this.canvas,
-              radius: 1,
-              mass: 1,
-              color: new Colour(0, 0, 0),
-              showTrail: false,
-              showForceVector: false
-            })
+            new Planet(
+              {
+                position: new Vector(x, y),
+                velocity: new Vector(0, 0),
+                acceleration: new Vector(0, 0),
+                canvas: this.canvas,
+                radius: 1,
+                mass: 1,
+                color: new Colour(0, 0, 0)
+              },
+              this.settings
+            )
           );
           totalForce = Vector.add(totalForce, force);
         }

@@ -1,5 +1,6 @@
 import { Canvas } from '../canvas';
 import { Colour } from '../colour';
+import { SettingsManager } from '../game/settings';
 import { Vector } from '../vector';
 import { GameObject, GameObjectConfig } from './gameObject';
 
@@ -7,23 +8,17 @@ export interface PlanetConfig extends GameObjectConfig {
   radius: number;
   mass: number;
   color: Colour;
-  showTrail: boolean;
-  showForceVector: boolean;
 }
 
 export class Planet extends GameObject {
   public radius: number;
   public mass: number;
   public color: Colour;
-  public showTrail = false;
-  public showForceVector = false;
   private trail: Vector[] = [];
   private currentForce: Vector = new Vector(0, 0);
 
-  constructor(config: PlanetConfig) {
-    super(config);
-    this.showTrail = config.showTrail;
-    this.showForceVector = config.showForceVector;
+  constructor(config: PlanetConfig, settings: SettingsManager) {
+    super(config, settings);
   }
 
   public update(force: Vector) {
@@ -47,7 +42,7 @@ export class Planet extends GameObject {
   }
 
   private drawTrail() {
-    if (!this.showTrail) {
+    if (!this.settings.displayTrail) {
       return;
     }
     const trailColor = this.color.clone().setAlpha(0.1);
@@ -57,7 +52,7 @@ export class Planet extends GameObject {
   }
 
   private drawForceVector() {
-    if (!this.showForceVector) {
+    if (!this.settings.displayForceVector) {
       return;
     }
     const forceColor = this.color.clone().setAlpha(0.5);
@@ -71,11 +66,12 @@ export class Planet extends GameObject {
   }
 
   private updateTrail() {
-    if (this.showTrail) {
-      this.trail.push(Vector.clone(this.position));
-      if (this.trail.length > 50) {
-        this.trail.shift();
-      }
+    if (!this.settings.displayTrail) {
+      return;
+    }
+    this.trail.push(Vector.clone(this.position));
+    if (this.trail.length > 50) {
+      this.trail.shift();
     }
   }
 }
